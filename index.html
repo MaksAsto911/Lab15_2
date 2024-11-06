@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пошук і модифікація слів</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .output {
+      margin-top: 20px;
+    }
+    .output p {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Завдання: Підрахувати кількість слів, що починаються з 'A' і модифікувати передостаннє слово</h2>
+  <textarea id="inputString" placeholder="Введіть свій рядок..."></textarea><br>
+  <button onclick="processString()">Обробити рядок</button>
+
+  <div class="output">
+    <p><strong>Початковий рядок:</strong> <span id="originalString"></span></p>
+    <p><strong>Редагований рядок:</strong> <span id="modifiedString"></span></p>
+    <p><strong>Кількість слів, що починаються з 'A':</strong> <span id="countA"></span></p>
+  </div>
+
+  <script>
+    function processString() {
+      // Отримуємо введений рядок
+      let inputString = document.getElementById('inputString').value;
+
+      // Виводимо початковий рядок
+      document.getElementById('originalString').innerText = inputString;
+
+      // Розбиваємо рядок на масив слів
+      let words = inputString.split(/\s+/);
+
+      // Підрахунок слів, що починаються з 'A' або 'а' (незалежно від мови та регістру)
+      let countA = words.filter(word => /^[АаAа]/.test(word)).length;
+
+      // Модифікація передостаннього слова, тільки якщо є два і більше слів
+      if (words.length > 1) {
+        let secondLastWord = words[words.length - 2];
+        let modifiedSecondLastWord = secondLastWord.split('').join('*');
+        words[words.length - 2] = modifiedSecondLastWord;
+      }
+
+      // Створюємо відредагований рядок
+      let modifiedString = words.join(' ');
+
+      // Виводимо результат
+      document.getElementById('modifiedString').innerText = modifiedString;
+      document.getElementById('countA').innerText = countA;
+    }
+  </script>
+</body>
+</html>
